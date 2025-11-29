@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+
+body {
+  font-family: "poppins", sans-serif;
+}
+
+h1, h2 {
+  font-family: "science-gothic", sans-serif;
+}
