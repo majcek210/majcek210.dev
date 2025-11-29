@@ -8,3 +8,9 @@ body {
 h1, h2 {
   font-family: "science-gothic", sans-serif;
 }
+
+@layer utilities{
+  .gradient{
+    background: linear-gradient(-45deg, #302b63,#00bf9f, #1cd8d2);
+  }
+}
