@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar"
 import Particles from "./components/Particles"
+import Cursor from "./components/Cursor"
 
 import Home from "./sections/Home"
 import About from "./sections/About"
@@ -13,6 +14,7 @@ export default function App(){
   return (
     <div className="relative gradient text-white">
       <Particles/>
+      <Cursor/>
       <Navbar/>
       <Home/>
       <About/>
