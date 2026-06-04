@@ -14,17 +14,23 @@ function Contact() {
     e.preventDefault();
 
     const form = formRef.current;
+    if (!turnstileToken) {
+      setMessage("please complete the captcha.");
+      return;
+    }
 
     const payload = {
       name: form.user_name.value.trim(),
       email: form.user_email.value.trim(),
       message: form.message.value.trim(),
+      turnstileToken,
     };
 
     setLoading(true);
+    console.log(payload);
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +57,11 @@ function Contact() {
 
   const socials = [
     { href: "https://github.com/majcek210", label: "github", icon: FiGithub },
-    { href: "https://www.linkedin.com/in/maj-plenj%C5%A1ek-824716391", label: "linkedin", icon: FiLinkedin },
+    {
+      href: "https://www.linkedin.com/in/maj-plenj%C5%A1ek-824716391",
+      label: "linkedin",
+      icon: FiLinkedin,
+    },
   ];
 
   return (
@@ -162,7 +172,8 @@ function Contact() {
           >
             <div>
               <p className="font-serif text-base text-zinc-400 leading-relaxed mb-6">
-                Have something to say, or just want to say hi? Contact me, I usually respond in 1-2 days.
+                Have something to say, or just want to say hi? Contact me, I
+                usually respond in 1-2 days.
               </p>
             </div>
 
