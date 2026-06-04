@@ -1,199 +1,193 @@
-import React, { useRef } from 'react'
-import { motion } from 'framer-motion'
-import emailjs from '@emailjs/browser'
-import { FiMail, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi'
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import { FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import Turnstile from "react-turnstile";
 
 function Contact() {
-  const formRef = useRef(null)
-  const [loading, setLoading] = React.useState(false)
-  const [message, setMessage] = React.useState('')
+  const formRef = useRef(null);
+  const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+  const [turnstileToken, setTurnstileToken] = React.useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+
+    const form = formRef.current;
+
+    const payload = {
+      name: form.user_name.value.trim(),
+      email: form.user_email.value.trim(),
+      message: form.message.value.trim(),
+    };
+
+    setLoading(true);
 
     try {
-      // Initialize EmailJS with your service ID
-      emailjs.init('YOUR_EMAILJS_PUBLIC_KEY')
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-      await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        formRef.current
-      )
+      const data = await response.json();
 
-      setMessage('Message sent successfully! I\'ll get back to you soon.')
-      formRef.current.reset()
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      setMessage("sent — i'll get back to you soon.");
+      form.reset();
     } catch (error) {
-      setMessage('Something went wrong. Please try again.')
-      console.error(error)
+      setMessage("something went wrong.");
+      console.log(error.message);
     } finally {
-      setLoading(false)
-      setTimeout(() => setMessage(''), 5000)
+      setLoading(false);
+      setTimeout(() => setMessage(""), 5000);
     }
-  }
+  };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 }
-    }
-  }
+  const socials = [
+    { href: "https://github.com/majcek210", label: "github", icon: FiGithub },
+    { href: "https://www.linkedin.com/in/maj-plenj%C5%A1ek-824716391", label: "linkedin", icon: FiLinkedin },
+  ];
 
   return (
-    <section id="contact" className='w-full min-h-screen py-20 px-4 bg-black'>
-      <div className='max-w-3xl mx-auto'>
+    <section id="contact" className="w-full py-20 px-6 bg-zinc-950 font-mono">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className='mb-16 text-center'
+          className="mb-12"
         >
-          <h2 className='text-4xl sm:text-5xl font-bold text-white mb-2'>Get In Touch</h2>
-          <div className='h-1 w-24 bg-gradient-to-r from-cyan-400 to-teal-500 mx-auto mb-6'></div>
-          <p className='text-gray-400 text-lg'>Have a project in mind or just want to chat? Feel free to reach out!</p>
+          <p className="text-[11px] tracking-widest text-zinc-600 uppercase mb-2">
+            say hello
+          </p>
+          <h2 className="text-5xl font-serif font-normal text-zinc-50 leading-tight mb-3">
+            get in <em className="text-teal-400 italic">touch</em>
+          </h2>
+          <div className="h-0.5 w-10 bg-teal-400" />
         </motion.div>
 
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12'>
-          {/* Contact Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Form */}
           <motion.form
             ref={formRef}
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className='space-y-4'
+            className="space-y-5"
           >
             <div>
-              <label className='block text-gray-300 mb-2 text-sm font-medium'>Name</label>
+              <label className="block text-[10px] tracking-widest text-zinc-600 uppercase mb-2">
+                name
+              </label>
               <input
-                type='text'
-                name='user_name'
-                placeholder='Your name'
+                type="text"
+                name="user_name"
+                placeholder="your name"
                 required
-                className='w-full px-4 py-2 bg-black border border-cyan-400/30 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-cyan-400/60 transition-colors duration-300'
+                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200"
               />
             </div>
 
             <div>
-              <label className='block text-gray-300 mb-2 text-sm font-medium'>Email</label>
+              <label className="block text-[10px] tracking-widest text-zinc-600 uppercase mb-2">
+                email
+              </label>
               <input
-                type='email'
-                name='user_email'
-                placeholder='your@email.com'
+                type="email"
+                name="user_email"
+                placeholder="your@email.com"
                 required
-                className='w-full px-4 py-2 bg-black border border-cyan-400/30 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-cyan-400/60 transition-colors duration-300'
+                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200"
               />
             </div>
 
             <div>
-              <label className='block text-gray-300 mb-2 text-sm font-medium'>Message</label>
+              <label className="block text-[10px] tracking-widest text-zinc-600 uppercase mb-2">
+                message
+              </label>
               <textarea
-                name='message'
-                placeholder='Your message here...'
-                rows='5'
+                name="message"
+                placeholder="what's on your mind..."
+                rows="5"
                 required
-                className='w-full px-4 py-2 bg-black border border-cyan-400/30 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-cyan-400/60 transition-colors duration-300 resize-none'
-              ></textarea>
+                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200 resize-none"
+              />
             </div>
+            <Turnstile
+              sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+              onVerify={(token) => {
+                setTurnstileToken(token);
+              }}
+              onExpire={() => {
+                setTurnstileToken("");
+              }}
+            />
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              type='submit'
+            <button
+              type="submit"
               disabled={loading}
-              className='w-full px-6 py-3 bg-cyan-400 text-black rounded-lg font-medium hover:bg-teal-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
+              className="px-6 py-2.5 text-sm text-teal-400 border border-teal-400/40 rounded hover:border-teal-400 hover:bg-teal-400/5 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {loading ? 'Sending...' : 'Send Message'}
-            </motion.button>
+              {loading ? "sending..." : "send message"}
+            </button>
 
             {message && (
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className='text-center text-cyan-400 text-sm'
+                className="text-teal-400 text-xs"
               >
                 {message}
               </motion.p>
             )}
           </motion.form>
 
-          {/* Contact Info */}
+          {/* Info */}
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className='space-y-8'
+            className="flex flex-col justify-between gap-10"
           >
-            <motion.div
-              variants={itemVariants}
-              className='flex gap-4 items-start p-4 rounded-lg bg-gradient-to-br from-cyan-400/5 to-teal-500/5 border border-cyan-400/20'
-            >
-              <FiMail size={24} className='text-cyan-400 flex-shrink-0 mt-1' />
-              <div>
-                <h3 className='text-white font-semibold mb-1'>Email</h3>
-                <a href='mailto:hello@majcek210.dev' className='text-gray-400 hover:text-cyan-400 transition-colors duration-300'>
-                  hello@majcek210.dev
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className='space-y-4'
-            >
-              <h3 className='text-white font-semibold'>Connect With Me</h3>
-              <div className='flex gap-4'>
-                <a
-                  href='#'
-                  className='p-3 rounded-lg bg-gradient-to-br from-cyan-400/5 to-teal-500/5 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/20 hover:border-cyan-400/60 transition-all duration-300'
-                  aria-label="github"
-                >
-                  <FiGithub size={24} />
-                </a>
-                <a
-                  href='#'
-                  className='p-3 rounded-lg bg-gradient-to-br from-cyan-400/5 to-teal-500/5 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/20 hover:border-cyan-400/60 transition-all duration-300'
-                  aria-label="linkedin"
-                >
-                  <FiLinkedin size={24} />
-                </a>
-                <a
-                  href='#'
-                  className='p-3 rounded-lg bg-gradient-to-br from-cyan-400/5 to-teal-500/5 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/20 hover:border-cyan-400/60 transition-all duration-300'
-                  aria-label="twitter"
-                >
-                  <FiTwitter size={24} />
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className='p-4 rounded-lg bg-gradient-to-br from-cyan-400/5 to-teal-500/5 border border-cyan-400/20'
-            >
-              <p className='text-gray-400 text-sm'>
-                I typically respond within 24 hours. Looking forward to hearing from you!
+            <div>
+              <p className="font-serif text-base text-zinc-400 leading-relaxed mb-6">
+                Have something to say, or just want to say hi? Contact me, I usually respond in 1-2 days.
               </p>
-            </motion.div>
+            </div>
+
+            <div>
+              <p className="text-[10px] tracking-widest text-zinc-600 uppercase mb-4 pb-2 border-b border-zinc-800">
+                elsewhere
+              </p>
+              <div className="flex gap-3">
+                {socials.map(({ href, label, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    className="p-2.5 border border-zinc-800 rounded text-zinc-500 hover:text-teal-400 hover:border-teal-400/30 transition-all duration-200"
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default Contact
+export default Contact;

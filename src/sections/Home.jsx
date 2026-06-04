@@ -1,99 +1,87 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React from "react";
+import { motion } from "framer-motion";
 
 function Home() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
-  }
-
   return (
-    <section id="home" className='w-full h-screen relative bg-black overflow-hidden flex items-center justify-center px-4'>
+    <section
+      id="home"
+      className="w-full h-screen relative bg-zinc-950 overflow-hidden flex items-center justify-center px-6"
+    >
       <motion.div
-        className='text-center z-10 max-w-3xl'
-        variants={containerVariants}
+        className="z-10 max-w-2xl w-full"
         initial="hidden"
         animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
+        }}
       >
-        <motion.p 
-          variants={itemVariants}
-          className='text-lg text-gray-400 mb-4 font-light tracking-wider'
+        <motion.p
+          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+          className="text-[11px] tracking-widest text-zinc-600 uppercase font-mono mb-4"
         >
-          Hi, I'm
+          hey, i'm
         </motion.p>
-        
-        <motion.h1 
-          variants={itemVariants}
-          className='text-6xl sm:text-7xl font-bold text-white mb-6 leading-tight'
+
+        <motion.h1
+          variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } } }}
+          className="text-6xl sm:text-7xl font-serif font-normal text-zinc-50 leading-tight mb-3"
         >
-          Majcek210
+          Majcek<em className="text-teal-400 italic">210</em>
         </motion.h1>
-        
-        <motion.div 
-          variants={itemVariants}
-          className='h-1 w-24 bg-gradient-to-r from-cyan-400 to-teal-500 mx-auto mb-6'
-        ></motion.div>
 
-        <motion.p 
-          variants={itemVariants}
-          className='text-xl sm:text-2xl text-gray-300 mb-8 font-light leading-relaxed'
+        <motion.div
+          variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.5, ease: "easeOut" } } }}
+          style={{ originX: 0 }}
+          className="h-0.5 w-10 bg-teal-400 mb-8"
+        />
+
+        <motion.p
+          variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+          className="font-serif text-xl text-zinc-400 leading-relaxed mb-4"
         >
-          Full Stack Developer & Creative Coder
+          Student & Developer
         </motion.p>
 
-        <motion.p 
-          variants={itemVariants}
-          className='text-base sm:text-lg text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed'
+        <motion.p
+          variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+          className="font-mono text-sm text-zinc-600 leading-relaxed mb-10 max-w-md"
         >
-          I build responsive web experiences with React, JavaScript, and modern web technologies. Passionate about clean code and beautiful UI.
+          I try to expiriement with many diffrent things and learn along the way.
         </motion.p>
 
         <motion.div
-          variants={itemVariants}
-          className='flex gap-4 justify-center flex-wrap'
+          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.5 } } }}
+          className="flex gap-3 flex-wrap"
         >
-          <a 
+          <a
             href="#projects"
-            className='px-8 py-3 border-2 border-cyan-400 text-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition-all duration-300 font-medium'
+            className="px-5 py-2.5 text-sm font-mono text-teal-400 border border-teal-400/40 rounded hover:border-teal-400 hover:bg-teal-400/5 transition-all duration-200"
           >
-            See My Work
+            see my work
           </a>
-          <a 
+          <a
             href="#contact"
-            className='px-8 py-3 bg-cyan-400 text-black rounded-lg hover:bg-teal-400 transition-all duration-300 font-medium'
+            className="px-5 py-2.5 text-sm font-mono text-zinc-400 border border-zinc-800 rounded hover:border-zinc-600 hover:text-zinc-200 transition-all duration-200"
           >
-            Get In Touch
+            get in touch
           </a>
         </motion.div>
       </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        className='absolute bottom-8 left-1/2 transform -translate-x-1/2'
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-widest text-zinc-700 uppercase flex flex-col items-center gap-2"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <svg className='w-6 h-6 text-gray-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 14l-7 7m0 0l-7-7m7 7V3' />
+        <span>scroll</span>
+        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
         </svg>
       </motion.div>
     </section>
-  )
+  );
 }
 
-export default Home
+export default Home;

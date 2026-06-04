@@ -41,7 +41,7 @@ function SkillChip({ name, icon, invert }) {
 
 function Skills() {
   return (
-    <section id="skills" className="w-full min-h-screen py-20 px-6 bg-zinc-950 font-mono">
+    <section id="skills" className="w-full  py-90 px-6 bg-zinc-950 font-mono">
       <div className="max-w-4xl mx-auto">
 
         <motion.div
@@ -68,7 +68,7 @@ function Skills() {
           <p className="font-serif text-base text-zinc-400 leading-relaxed">
             I build web applications with web frameworks such as{" "}
             <strong className="text-zinc-200 font-medium">Next.js and TypeScript</strong> I also have some expirience{" "}
-            <strong className="text-zinc-200 font-medium">Lua/Luau</strong> scripting. At the time, I can also make discord bots. I know {" "}<strong className="text-zinc-200 font-medium">docker</strong> well and currently im learing VM software such as <strong className="text-zinc-200 font-medium">Proxmox</strong>
+            <strong className="text-zinc-200 font-medium">Lua/Luau</strong> scripting. At the time, I can also make discord bots. I know {" "}<strong className="text-zinc-200 font-medium">docker</strong> well and currently im learning VM software such as <strong className="text-zinc-200 font-medium">Proxmox</strong>
           </p>
         </motion.div>
 
@@ -84,7 +84,7 @@ function Skills() {
             <p className="text-[10px] tracking-widest text-zinc-600 uppercase pb-2 border-b border-zinc-800 mb-3">
               {group}
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-center gap-2">
               {items.map((skill) => (
                 <SkillChip key={skill.name} {...skill} />
               ))}
@@ -102,7 +102,7 @@ function Skills() {
           <p className="text-[10px] tracking-widest text-zinc-600 uppercase pb-2 border-b border-zinc-800 mb-3">
             tools &amp; workflow
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             {tools.map((item) => (
               <span
                 key={item}

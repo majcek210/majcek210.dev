@@ -1,47 +1,63 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React from "react";
+import { motion } from "framer-motion";
+
+const links = [
+  { href: "#home", label: "home" },
+  { href: "#about", label: "about" },
+  { href: "#skills", label: "skills" },
+  { href: "#projects", label: "projects" },
+  { href: "#contact", label: "contact" },
+];
 
 function Footer() {
-  const currentYear = new Date().getFullYear()
+  const year = new Date().getFullYear();
 
   return (
-    <footer className='w-full bg-black border-t border-cyan-400/20 py-12 px-4'>
-      <div className='max-w-5xl mx-auto'>
+    <footer className="w-full bg-zinc-950 border-t border-zinc-800 py-10 px-6 font-mono">
+      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className='text-center'
         >
-          <div className='mb-6'>
-            <h2 className='text-2xl font-bold text-white mb-2'>majcek210</h2>
-            <p className='text-gray-400 text-sm'>Full Stack Developer & Creative Coder</p>
-          </div>
-
-          <div className='mb-8 flex justify-center gap-6 text-sm text-gray-400'>
-            <a href='#home' className='hover:text-cyan-400 transition-colors duration-300'>Home</a>
-            <a href='#about' className='hover:text-cyan-400 transition-colors duration-300'>About</a>
-            <a href='#skills' className='hover:text-cyan-400 transition-colors duration-300'>Skills</a>
-            <a href='#projects' className='hover:text-cyan-400 transition-colors duration-300'>Projects</a>
-            <a href='#contact' className='hover:text-cyan-400 transition-colors duration-300'>Contact</a>
-          </div>
-
-          <div className='h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent mb-8'></div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className='text-gray-500 text-sm'
-          >
-            © {currentYear} majcek210. Built with React, Vite & Tailwind CSS.
-          </motion.p>
+          <p className="text-zinc-50 font-serif text-lg font-normal mb-0.5">
+            majcek<em className="text-teal-400 italic">210</em>
+          </p>
         </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap gap-5"
+        >
+          {links.map(({ href, label }) => (
+            <a
+              key={label}
+              href={href}
+              className="text-[11px] tracking-widest text-zinc-600 uppercase hover:text-teal-400 transition-colors duration-200"
+            >
+              {label}
+            </a>
+          ))}
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-[11px] text-zinc-700"
+        >
+          © {year} - Built with react, vite & tailwind
+        </motion.p>
+
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;
