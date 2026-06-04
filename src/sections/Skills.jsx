@@ -66,9 +66,12 @@ function Skills() {
           className="border-l-2 border-teal-400/20 pl-5 mb-10"
         >
           <p className="font-serif text-base text-zinc-400 leading-relaxed">
-            I build web applications with web frameworks such as{" "}
-            <strong className="text-zinc-200 font-medium">Next.js and TypeScript</strong> I also have some expirience{" "}
-            <strong className="text-zinc-200 font-medium">Lua/Luau</strong> scripting. At the time, I can also make discord bots. I know {" "}<strong className="text-zinc-200 font-medium">docker</strong> well and currently im learning VM software such as <strong className="text-zinc-200 font-medium">Proxmox</strong>
+            I build web applications using{" "}
+            <strong className="text-zinc-200 font-medium">Next.js and TypeScript</strong>, and I also have experience with{" "}
+            <strong className="text-zinc-200 font-medium">Lua/Luau</strong> scripting. I build{" "}
+            <strong className="text-zinc-200 font-medium">Discord</strong> bots, know{" "}
+            <strong className="text-zinc-200 font-medium">Docker</strong> well, and am currently learning VM software such as{" "}
+            <strong className="text-zinc-200 font-medium">Proxmox</strong>.
           </p>
         </motion.div>
 

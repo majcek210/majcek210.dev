@@ -24,7 +24,7 @@ const projects = [
     id: 3,
     title: "Ghost deps",
     description:
-      "A project made with ai that deteects ghost and unused dependencies in Node.js projects.",
+      "A project made with ai that detects ghost and unused dependencies in Node.js projects.",
     tags: ["TypeScript", "AI", "npm"],
     github: "https://github.com/majcek210/ghost-deps",
   },
@@ -88,22 +88,32 @@ function Projects() {
 
               {/* Links */}
               <div className="flex gap-3 shrink-0">
-                <a
-                  href={project.github}
-                  aria-label="github"
-                  className="text-zinc-600 hover:text-teal-400 transition-colors duration-200"
-                >
-                  <FiGithub size={17} />
-                </a>
-                {project.demo &&
-                <a
-                  href={project.demo}
-                  aria-label="demo"
-                  className="text-zinc-600 hover:text-teal-400 transition-colors duration-200"
-                >
-                  <FiExternalLink size={17} />
-                </a>
-                }
+                {project.github && project.github !== "#" ? (
+                  <a
+                    href={project.github}
+                    aria-label="github"
+                    className="text-zinc-600 hover:text-teal-400 transition-colors duration-200"
+                  >
+                    <FiGithub size={17} />
+                  </a>
+                ) : (
+                  <span aria-disabled="true" className="text-zinc-800 cursor-not-allowed">
+                    <FiGithub size={17} />
+                  </span>
+                )}
+                {project.demo && project.demo !== "#" ? (
+                  <a
+                    href={project.demo}
+                    aria-label="demo"
+                    className="text-zinc-600 hover:text-teal-400 transition-colors duration-200"
+                  >
+                    <FiExternalLink size={17} />
+                  </a>
+                ) : project.demo ? (
+                  <span aria-disabled="true" className="text-zinc-800 cursor-not-allowed">
+                    <FiExternalLink size={17} />
+                  </span>
+                ) : null}
               </div>
             </motion.div>
           ))}

@@ -4,15 +4,15 @@ import { motion } from "framer-motion";
 const facts = [
   {
     label: "background",
-    value: "self-taught, learning by expirimenting",
+    value: "self-taught, learning by experimenting",
   },
   {
     label: "right now",
-    value: "full-stack apps, mantaining systems",
+    value: "full-stack apps, maintaining systems",
   },
   {
     label: "also into",
-    value: "AI, opensource and sideprojects",
+    value: "AI, open-source/side-projects",
   },
 ];
 
@@ -58,7 +58,7 @@ function About() {
             <strong className="text-zinc-200 font-medium">
               maintaining our servers and learning new stuff
             </strong>
-            . Meanwhile, I also have some expirience in Adobe programs as After Effects where, I made a really cool 3D lyrics video/animation.
+            . Meanwhile, I also have some experience in Adobe programs as After Effects where, I made a really cool 3D lyrics video/animation.
           </p>
           <p className="font-serif text-base text-zinc-400 leading-relaxed">
            I care about security and automation, so I can keep our servers running.

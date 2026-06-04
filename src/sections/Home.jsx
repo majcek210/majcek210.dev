@@ -47,7 +47,7 @@ function Home() {
           variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
           className="font-mono text-sm text-zinc-600 leading-relaxed mb-10 max-w-md"
         >
-          I try to expiriement with many diffrent things and learn along the way.
+          I try to experiment with many different things and learn along the way.
         </motion.p>
 
         <motion.div

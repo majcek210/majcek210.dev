@@ -6,12 +6,22 @@ import Turnstile from "react-turnstile";
 
 function Contact() {
   const formRef = useRef(null);
+  const turnstileRef = useRef(null);
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [turnstileToken, setTurnstileToken] = React.useState("");
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+  const configError = !apiUrl || !turnstileSiteKey;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (configError) {
+      setMessage("configuration error: missing environment variables.");
+      return;
+    }
 
     const form = formRef.current;
     if (!turnstileToken) {
@@ -27,10 +37,12 @@ function Contact() {
     };
 
     setLoading(true);
-    console.log(payload);
+    if (import.meta.env.DEV) {
+      console.log(payload);
+    }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +58,10 @@ function Contact() {
 
       setMessage("sent — i'll get back to you soon.");
       form.reset();
+      setTurnstileToken("");
+      if (turnstileRef.current) {
+        turnstileRef.current.reset();
+      }
     } catch (error) {
       setMessage("something went wrong.");
       console.log(error.message);
@@ -133,19 +149,26 @@ function Contact() {
                 className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200 resize-none"
               />
             </div>
-            <Turnstile
-              sitekey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-              onVerify={(token) => {
-                setTurnstileToken(token);
-              }}
-              onExpire={() => {
-                setTurnstileToken("");
-              }}
-            />
+            {configError ? (
+              <p className="text-xs text-red-400">
+                Configuration error: missing required environment variables.
+              </p>
+            ) : (
+              <Turnstile
+                ref={turnstileRef}
+                sitekey={turnstileSiteKey}
+                onVerify={(token) => {
+                  setTurnstileToken(token);
+                }}
+                onExpire={() => {
+                  setTurnstileToken("");
+                }}
+              />
+            )}
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || configError}
               className="px-6 py-2.5 text-sm text-teal-400 border border-teal-400/40 rounded hover:border-teal-400 hover:bg-teal-400/5 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {loading ? "sending..." : "send message"}

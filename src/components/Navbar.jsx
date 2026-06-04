@@ -72,7 +72,7 @@ function Navbar() {
         <div className="block lg:absolute lg:left-1/2 lg:-translate-x-1/2">
           <button
             onClick={() => setMenuOpen(true)}
-            className="text-zinc-400 hover:text-zinc-100 transition-colors duration-200 focus:outline-none"
+            className="text-zinc-400 hover:text-zinc-100 transition-colors duration-200 focus-visible:ring-2"
             aria-label="open menu"
           >
             <TbMenu4 className="w-5 h-5" />
