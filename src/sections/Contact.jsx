@@ -53,7 +53,7 @@ function Contact() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error);
+        throw new Error(data.error || "something went wrong.");
       }
 
       setMessage("sent — i'll get back to you soon.");
@@ -63,7 +63,7 @@ function Contact() {
         turnstileRef.current.reset();
       }
     } catch (error) {
-      setMessage("something went wrong.");
+      setMessage(error.message || "something went wrong.");
       console.log(error.message);
     } finally {
       setLoading(false);
@@ -120,6 +120,8 @@ function Contact() {
                 name="user_name"
                 placeholder="your name"
                 required
+                minLength={2}
+                maxLength={50}
                 className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200"
               />
             </div>
@@ -133,6 +135,7 @@ function Contact() {
                 name="user_email"
                 placeholder="your@email.com"
                 required
+                maxLength={255}
                 className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200"
               />
             </div>
@@ -146,6 +149,8 @@ function Contact() {
                 placeholder="what's on your mind..."
                 rows="5"
                 required
+                minLength={10}
+                maxLength={2000}
                 className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200 resize-none"
               />
             </div>
@@ -157,6 +162,7 @@ function Contact() {
               <Turnstile
                 ref={turnstileRef}
                 sitekey={turnstileSiteKey}
+                theme="dark"
                 onVerify={(token) => {
                   setTurnstileToken(token);
                 }}

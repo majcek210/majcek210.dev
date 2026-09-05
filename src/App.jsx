@@ -12,7 +12,7 @@ import Contact from "./sections/Contact"
 
 export default function App(){
   return (
-    <div className="relative gradient text-white">
+    <div className="relative bg-zinc-950 text-white">
       <Particles/>
       <Cursor/>
       <Navbar/>

@@ -11,18 +11,6 @@ h1, h2, h3 {
 }
 
 @layer utilities {
-  .gradient {
-    background: linear-gradient(-45deg, #302b63, #00bf9f, #1cd8d2);
-  }
-  
-  .gradient-text {
-    @apply bg-gradient-to-r from-cyan-400 to-teal-500 bg-clip-text text-transparent;
-  }
-  
-  .glass-effect {
-    @apply backdrop-blur-md bg-white/10 border border-white/20;
-  }
-  
   .smooth-transition {
     @apply transition-all duration-300 ease-in-out;
   }
