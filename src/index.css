@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+body {
+  font-family: Poppins, sans-serif;
+  background: #000000;
+}
+
+h1, h2, h3 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+}
+
+@layer utilities {
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
