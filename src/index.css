@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* The accent is the beak from my avatar instead of stock teal.
+   Change this one line to try another colour. */
+@theme {
+  --color-accent: #f5a00f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: #09090b;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(245, 160, 15, 0.35);
+  color: #ffffff;
+}
