@@ -1,17 +1,28 @@
 @import "tailwindcss";
 
-body {
-  font-family: Poppins, sans-serif;
-  background: #000000;
+/* The accent is the beak from my avatar instead of stock teal.
+   Change this one line to try another colour. */
+@theme {
+  --color-accent: #f5a00f;
 }
 
-h1, h2, h3 {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
+html {
+  scroll-behavior: smooth;
 }
 
-@layer utilities {
-  .smooth-transition {
-    @apply transition-all duration-300 ease-in-out;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
+}
+
+body {
+  margin: 0;
+  background: #09090b;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(245, 160, 15, 0.35);
+  color: #ffffff;
 }

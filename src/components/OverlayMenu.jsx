@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 import { FiX } from "react-icons/fi";
 
-const MenuItems = ["Home", "About", "Skills", "Projects", "Contact"];
+const MenuItems = ["Home", "Projects", "About", "Contact"];
 
 function OverlayMenu({ isOpen, onClose }) {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
@@ -37,7 +37,7 @@ function OverlayMenu({ isOpen, onClose }) {
                 <a
                   href={`#${item.toLocaleLowerCase()}`}
                   onClick={onClose}
-                  className="text-4xl text-white font-semibold hover:text-teal-400 transition-colors duration-300"
+                  className="text-4xl font-serif text-white hover:text-accent transition-colors duration-300"
                 >
                   {item}
                 </a>

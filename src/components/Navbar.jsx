@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import OverlayMenu from "./OverlayMenu";
 import { TbMenu4 } from "react-icons/tb";
-import Logo from "../assets/pfp.png";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -56,15 +55,15 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 z-50 transition-transform duration-300 font-mono ${
+        className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 z-50 bg-zinc-950/90 transition-transform duration-300 font-mono ${
           visible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
         {/* Logo */}
         <div className="flex items-center gap-2.5">
-          <img src={Logo} alt="logo" className="w-7 h-7 rounded-full opacity-90" />
-          <span className="hidden sm:block font-serif text-lg font-normal text-zinc-50 leading-none">
-            majcek<em className="text-teal-400 italic">210</em>
+          <img src="/pfp-400.png" alt="" className="w-7 h-7 rounded-full" />
+          <span className="hidden sm:block font-serif text-lg text-zinc-50 leading-none">
+            majcek210
           </span>
         </div>
 
@@ -83,9 +82,9 @@ function Navbar() {
         <div className="hidden lg:block">
           <a
             href="#contact"
-            className="text-[11px] tracking-widest text-zinc-500 uppercase hover:text-teal-400 border border-zinc-800 hover:border-teal-400/30 rounded px-4 py-2 transition-all duration-200"
+            className="text-sm text-zinc-300 hover:text-accent border border-zinc-700 hover:border-zinc-400 rounded px-4 py-2 transition-colors duration-200"
           >
-            get in touch
+            Contact
           </a>
         </div>
       </nav>

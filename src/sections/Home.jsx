@@ -1,85 +1,66 @@
 import React from "react";
-import { motion } from "framer-motion";
+
+const now = [
+  { label: "Trstenko", text: "a desk assistant company, where I'm the CEO" },
+  { label: "terra-widget", text: "a desktop widget for Hack Club's Terra, v1.1 just out", href: "https://github.com/majcek210/terra-widget" },
+  { label: "coolvecity", text: "a free, open source alternative to MEE6", href: "https://github.com/majcek210/coolvecity" },
+];
 
 function Home() {
   return (
-    <section
-      id="home"
-      className="w-full h-screen relative bg-zinc-950 overflow-hidden flex items-center justify-center px-6"
-    >
-      <motion.div
-        className="z-10 max-w-2xl w-full"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
-        }}
-      >
-        <motion.p
-          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-          className="text-[11px] tracking-widest text-zinc-600 uppercase font-mono mb-4"
-        >
-          hey, i'm
-        </motion.p>
-
-        <motion.h1
-          variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } } }}
-          className="text-6xl sm:text-7xl font-serif font-normal text-zinc-50 leading-tight mb-3"
-        >
-          Majcek<em className="text-teal-400 italic">210</em>
-        </motion.h1>
-
-        <motion.div
-          variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.5, ease: "easeOut" } } }}
-          style={{ originX: 0 }}
-          className="h-0.5 w-10 bg-teal-400 mb-8"
+    <section id="home" className="w-full bg-zinc-950 px-6 pt-36 pb-24 sm:pt-44 sm:pb-32">
+      <div className="max-w-4xl mx-auto">
+        <img
+          src="/pfp-400.png"
+          alt="My avatar, a cartoon bird in a red cap"
+          width="88"
+          height="88"
+          className="w-20 h-20 sm:w-22 sm:h-22 rounded-full mb-8"
         />
 
-        <motion.p
-          variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-          className="font-serif text-xl text-zinc-400 leading-relaxed mb-4"
-        >
-          Student & Developer
-        </motion.p>
+        <h1 className="text-6xl sm:text-7xl font-serif text-zinc-50 leading-none mb-6">
+          majcek210
+        </h1>
 
-        <motion.p
-          variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-          className="font-mono text-sm text-zinc-600 leading-relaxed mb-10 max-w-md"
-        >
-          I try to experiment with many different things and learn along the way.
-        </motion.p>
+        <p className="font-serif text-xl sm:text-2xl text-zinc-300 leading-relaxed max-w-2xl mb-10">
+          I'm Maj, a student at SERS Maribor and the CEO of Trstenko. I host
+          most of what I build, which is how I ended up learning the
+          infrastructure side.
+        </p>
 
-        <motion.div
-          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.5 } } }}
-          className="flex gap-3 flex-wrap"
-        >
+        <div className="font-mono text-sm text-zinc-400 mb-10 max-w-2xl">
+          <p className="text-zinc-500 mb-3">Working on right now:</p>
+          <ul className="space-y-2">
+            {now.map((item) => (
+              <li key={item.label}>
+                {item.href ? (
+                  <a href={item.href} className="text-zinc-100 underline decoration-accent/60 underline-offset-4 hover:text-accent">
+                    {item.label}
+                  </a>
+                ) : (
+                  <span className="text-zinc-100">{item.label}</span>
+                )}
+                <span className="text-zinc-400">, {item.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex gap-3 flex-wrap">
           <a
             href="#projects"
-            className="px-5 py-2.5 text-sm font-mono text-teal-400 border border-teal-400/40 rounded hover:border-teal-400 hover:bg-teal-400/5 transition-all duration-200"
+            className="px-5 py-2.5 text-sm font-mono text-zinc-950 bg-accent rounded hover:bg-amber-300 transition-colors duration-200"
           >
-            see my work
+            See projects
           </a>
           <a
             href="#contact"
-            className="px-5 py-2.5 text-sm font-mono text-zinc-400 border border-zinc-800 rounded hover:border-zinc-600 hover:text-zinc-200 transition-all duration-200"
+            className="px-5 py-2.5 text-sm font-mono text-zinc-200 border border-zinc-700 rounded hover:border-zinc-400 transition-colors duration-200"
           >
-            get in touch
+            Write to me
           </a>
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-widest text-zinc-700 uppercase flex flex-col items-center gap-2"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span>scroll</span>
-        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-        </svg>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
-import { motion } from "framer-motion";
-import emailjs from "@emailjs/browser";
-import { FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
+import { SiTryhackme } from "react-icons/si";
 import Turnstile from "react-turnstile";
 
 function Contact() {
@@ -25,7 +24,7 @@ function Contact() {
 
     const form = formRef.current;
     if (!turnstileToken) {
-      setMessage("please complete the captcha.");
+      setMessage("Please finish the captcha first.");
       return;
     }
 
@@ -56,7 +55,7 @@ function Contact() {
         throw new Error(data.error || "something went wrong.");
       }
 
-      setMessage("sent — i'll get back to you soon.");
+      setMessage("Sent. I'll get back to you soon.");
       form.reset();
       setTurnstileToken("");
       if (turnstileRef.current) {
@@ -72,86 +71,65 @@ function Contact() {
   };
 
   const socials = [
-    { href: "https://github.com/majcek210", label: "github", icon: FiGithub },
+    { href: "https://github.com/majcek210", label: "GitHub", icon: FiGithub },
     {
       href: "https://www.linkedin.com/in/maj-plenj%C5%A1ek-824716391",
-      label: "linkedin",
+      label: "LinkedIn",
       icon: FiLinkedin,
     },
+    { href: "https://tryhackme.com/p/majcek210", label: "TryHackMe", icon: SiTryhackme },
   ];
 
   return (
-    <section id="contact" className="w-full py-20 px-6 bg-zinc-950 font-mono">
+    <section id="contact" className="w-full py-20 px-6 bg-zinc-950">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
-          <p className="text-[11px] tracking-widest text-zinc-600 uppercase mb-2">
-            say hello
-          </p>
-          <h2 className="text-5xl font-serif font-normal text-zinc-50 leading-tight mb-3">
-            get in <em className="text-teal-400 italic">touch</em>
-          </h2>
-          <div className="h-0.5 w-10 bg-teal-400" />
-        </motion.div>
+        <h2 className="text-4xl sm:text-5xl font-serif text-zinc-50 mb-12">Contact</h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Form */}
-          <motion.form
+          <form
             ref={formRef}
             onSubmit={handleSubmit}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
             className="space-y-5"
           >
             <div>
-              <label className="block text-[10px] tracking-widest text-zinc-600 uppercase mb-2">
-                name
+              <label className="block font-mono text-sm text-zinc-300 mb-2">
+                Your name
               </label>
               <input
                 type="text"
                 name="user_name"
-                placeholder="your name"
                 required
                 minLength={2}
                 maxLength={50}
-                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200"
+                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-base focus:outline-none focus:border-accent transition-colors duration-200"
               />
             </div>
 
             <div>
-              <label className="block text-[10px] tracking-widest text-zinc-600 uppercase mb-2">
-                email
+              <label className="block font-mono text-sm text-zinc-300 mb-2">
+                Email
               </label>
               <input
                 type="email"
                 name="user_email"
-                placeholder="your@email.com"
                 required
                 maxLength={255}
-                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200"
+                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-base focus:outline-none focus:border-accent transition-colors duration-200"
               />
             </div>
 
             <div>
-              <label className="block text-[10px] tracking-widest text-zinc-600 uppercase mb-2">
-                message
+              <label className="block font-mono text-sm text-zinc-300 mb-2">
+                Message
               </label>
               <textarea
                 name="message"
-                placeholder="what's on your mind..."
                 rows="5"
                 required
                 minLength={10}
                 maxLength={2000}
-                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-200 placeholder-zinc-700 text-sm focus:outline-none focus:border-teal-400/50 transition-colors duration-200 resize-none"
+                className="w-full px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-base focus:outline-none focus:border-accent transition-colors duration-200 resize-none"
               />
             </div>
             {configError ? (
@@ -175,55 +153,46 @@ function Contact() {
             <button
               type="submit"
               disabled={loading || configError}
-              className="px-6 py-2.5 text-sm text-teal-400 border border-teal-400/40 rounded hover:border-teal-400 hover:bg-teal-400/5 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-6 py-2.5 font-mono text-sm text-zinc-950 bg-accent rounded hover:bg-amber-300 transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {loading ? "sending..." : "send message"}
+              {loading ? "Sending..." : "Send message"}
             </button>
 
             {message && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-teal-400 text-xs"
+              <p
+                className="font-mono text-sm text-accent"
               >
                 {message}
-              </motion.p>
+              </p>
             )}
-          </motion.form>
+          </form>
 
           {/* Info */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
+          <div
             className="flex flex-col justify-between gap-10"
           >
             <div>
-              <p className="font-serif text-base text-zinc-400 leading-relaxed mb-6">
-                Have something to say, or just want to say hi? Contact me, I
-                usually respond in 1-2 days.
+              <p className="font-serif text-lg text-zinc-300 leading-relaxed mb-6">
+                Questions about a project, a server problem, or just want to say hi?
+                Write here. I usually answer within a day or two.
               </p>
             </div>
 
             <div>
-              <p className="text-[10px] tracking-widest text-zinc-600 uppercase mb-4 pb-2 border-b border-zinc-800">
-                elsewhere
-              </p>
-              <div className="flex gap-3">
+              <p className="font-mono text-sm text-zinc-400 mb-3">Or find me here:</p>
+              <div className="flex flex-col gap-2 font-mono text-sm">
                 {socials.map(({ href, label, icon: Icon }) => (
                   <a
                     key={label}
                     href={href}
-                    aria-label={label}
-                    className="p-2.5 border border-zinc-800 rounded text-zinc-500 hover:text-teal-400 hover:border-teal-400/30 transition-all duration-200"
+                    className="inline-flex items-center gap-2 text-zinc-200 hover:text-accent"
                   >
-                    <Icon size={18} />
+                    <Icon size={16} /> {label}
                   </a>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
