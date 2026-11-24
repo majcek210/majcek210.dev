@@ -9,11 +9,15 @@ const MSG = {
     captcha: "Tick the captcha first, then send again.",
     sent: "Sent. I'll reply to the email you gave.",
     failed: "That didn't go through. Try again, or message me on LinkedIn.",
+    invalid: "Check the fields: a name, a real email and at least 10 characters of message.",
+    busy: "Too many messages from your connection. Try again in 15 minutes.",
   },
   sl: {
     captcha: "Najprej potrdi captcho, nato pošlji znova.",
     sent: "Poslano. Odgovoril bom na e-mail, ki si ga vpisal.",
     failed: "Ni šlo skozi. Poskusi znova ali mi piši na LinkedInu.",
+    invalid: "Preveri polja: ime, pravi e-mail in vsaj 10 znakov sporočila.",
+    busy: "Preveč sporočil z tvoje povezave. Poskusi čez 15 minut.",
   },
 };
 
@@ -50,14 +54,18 @@ export default function Contact() {
           email: f.user_email.value.trim(),
           message: f.message.value.trim(),
           turnstileToken: token,
+          website: f.website.value,
         }),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || MSG[lang].failed);
+      if (!res.ok) {
+        const key = res.status === 422 ? "invalid" : res.status === 429 ? "busy" : res.status === 400 ? "captcha" : "failed";
+        setStatus({ kind: "err", text: MSG[lang][key] });
+        return;
+      }
       setStatus({ kind: "ok", text: MSG[lang].sent });
       f.reset();
-    } catch (err) {
-      setStatus({ kind: "err", text: err.message || MSG[lang].failed });
+    } catch {
+      setStatus({ kind: "err", text: MSG[lang].failed });
     } finally {
       setToken("");
       turnstileRef.current?.reset();
@@ -84,6 +92,8 @@ export default function Contact() {
             <input name="user_email" type="email" required maxLength={255} autoComplete="email" />
           </label>
         </div>
+        {/* honeypot: hidden from people, bots fill it and the API drops the message */}
+        <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hp" />
         <label>
           <span><T en="Message" sl="Sporočilo" /></span>
           <textarea name="message" rows={6} required minLength={10} maxLength={2000} />
